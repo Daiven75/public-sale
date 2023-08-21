@@ -13,13 +13,16 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class Proposal extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 8524767465512990602L;
+  private static final long serialVersionUID = 6567012680857596821L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Proposal\",\"fields\":[{\"name\":\"product\",\"type\":{\"type\":\"record\",\"name\":\"Product\",\"fields\":[{\"name\":\"code\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"bidValue\",\"type\":\"double\"},{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"Author\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"email\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Proposal\",\"fields\":[{\"name\":\"product\",\"type\":{\"type\":\"record\",\"name\":\"Product\",\"fields\":[{\"name\":\"code\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"bidValue\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":9,\"scale\":2}},{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"Author\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"email\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
+  static {
+    MODEL$.addLogicalTypeConversion(new org.apache.avro.Conversions.DecimalConversion());
+  }
 
   private static final BinaryMessageEncoder<Proposal> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
@@ -73,7 +76,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   private Product product;
-  private double bidValue;
+  private java.math.BigDecimal bidValue;
   private Author author;
 
   /**
@@ -89,7 +92,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
    * @param bidValue The new value for bidValue
    * @param author The new value for author
    */
-  public Proposal(Product product, java.lang.Double bidValue, Author author) {
+  public Proposal(Product product, java.math.BigDecimal bidValue, Author author) {
     this.product = product;
     this.bidValue = bidValue;
     this.author = author;
@@ -112,13 +115,26 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
     }
   }
 
+  private static final org.apache.avro.Conversion<?>[] conversions =
+      new org.apache.avro.Conversion<?>[] {
+      null,
+      new org.apache.avro.Conversions.DecimalConversion(),
+      null,
+      null
+  };
+
+  @Override
+  public org.apache.avro.Conversion<?> getConversion(int field) {
+    return conversions[field];
+  }
+
   // Used by DatumReader.  Applications should not call.
   @Override
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: product = (Product)value$; break;
-    case 1: bidValue = (java.lang.Double)value$; break;
+    case 1: bidValue = (java.math.BigDecimal)value$; break;
     case 2: author = (Author)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
@@ -145,7 +161,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'bidValue' field.
    * @return The value of the 'bidValue' field.
    */
-  public double getBidValue() {
+  public java.math.BigDecimal getBidValue() {
     return bidValue;
   }
 
@@ -154,7 +170,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
    * Sets the value of the 'bidValue' field.
    * @param value the value to set.
    */
-  public void setBidValue(double value) {
+  public void setBidValue(java.math.BigDecimal value) {
     this.bidValue = value;
   }
 
@@ -218,7 +234,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
 
     private Product product;
     private Product.Builder productBuilder;
-    private double bidValue;
+    private java.math.BigDecimal bidValue;
     private Author author;
     private Author.Builder authorBuilder;
 
@@ -355,7 +371,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
       * Gets the value of the 'bidValue' field.
       * @return The value.
       */
-    public double getBidValue() {
+    public java.math.BigDecimal getBidValue() {
       return bidValue;
     }
 
@@ -365,7 +381,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'bidValue'.
       * @return This builder.
       */
-    public Proposal.Builder setBidValue(double value) {
+    public Proposal.Builder setBidValue(java.math.BigDecimal value) {
       validate(fields()[1], value);
       this.bidValue = value;
       fieldSetFlags()[1] = true;
@@ -386,6 +402,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
       * @return This builder.
       */
     public Proposal.Builder clearBidValue() {
+      bidValue = null;
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -481,7 +498,7 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
         } else {
           record.product = fieldSetFlags()[0] ? this.product : (Product) defaultValue(fields()[0]);
         }
-        record.bidValue = fieldSetFlags()[1] ? this.bidValue : (java.lang.Double) defaultValue(fields()[1]);
+        record.bidValue = fieldSetFlags()[1] ? this.bidValue : (java.math.BigDecimal) defaultValue(fields()[1]);
         if (authorBuilder != null) {
           try {
             record.author = this.authorBuilder.build();
@@ -519,63 +536,6 @@ public class Proposal extends org.apache.avro.specific.SpecificRecordBase implem
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
-  @Override protected boolean hasCustomCoders() { return true; }
-
-  @Override public void customEncode(org.apache.avro.io.Encoder out)
-    throws java.io.IOException
-  {
-    this.product.customEncode(out);
-
-    out.writeDouble(this.bidValue);
-
-    this.author.customEncode(out);
-
-  }
-
-  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
-    throws java.io.IOException
-  {
-    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
-    if (fieldOrder == null) {
-      if (this.product == null) {
-        this.product = new Product();
-      }
-      this.product.customDecode(in);
-
-      this.bidValue = in.readDouble();
-
-      if (this.author == null) {
-        this.author = new Author();
-      }
-      this.author.customDecode(in);
-
-    } else {
-      for (int i = 0; i < 3; i++) {
-        switch (fieldOrder[i].pos()) {
-        case 0:
-          if (this.product == null) {
-            this.product = new Product();
-          }
-          this.product.customDecode(in);
-          break;
-
-        case 1:
-          this.bidValue = in.readDouble();
-          break;
-
-        case 2:
-          if (this.author == null) {
-            this.author = new Author();
-          }
-          this.author.customDecode(in);
-          break;
-
-        default:
-          throw new java.io.IOException("Corrupt ResolvingDecoder.");
-        }
-      }
-    }
-  }
 }
 
 

@@ -81,7 +81,9 @@
 						<configuration>
 							<sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
 							<outputDirectory>${project.basedir}/src/main/java/com/lucasilva/auctionproducer/avro</outputDirectory>
+							<!-- Convert Avro to Type Java Class  -->
 							<stringType>String</stringType>
+							<enableDecimalLogicalType>true</enableDecimalLogicalType>
 						</configuration>
 					</execution>
 				</executions>

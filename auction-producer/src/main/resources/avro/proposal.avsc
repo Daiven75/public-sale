@@ -21,7 +21,12 @@
     },
     {
       "name": "bidValue",
-      "type": "double"
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 9,
+        "scale": 2
+      }
     },
     {
       "name": "author",
