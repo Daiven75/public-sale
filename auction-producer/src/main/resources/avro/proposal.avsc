@@ -1,0 +1,44 @@
+{
+  "type": "record",
+  "name": "Proposal",
+  "fields": [
+    {
+      "name": "product",
+      "type": {
+        "type": "record",
+        "name": "Product",
+        "fields": [
+          {
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bidValue",
+      "type": "double"
+    },
+    {
+      "name": "author",
+      "type": {
+        "type": "record",
+        "name": "Author",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

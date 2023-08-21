@@ -1,0 +1,18 @@
+server:
+  port: 8000
+spring:
+  kafka:
+    template:
+      default-topic: proposal-product-events
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        "[schema.registry.url]": http://127.0.0.1:8085
+        "[specific.avro.reader]": true
+        acks: all
+        retries: 10
+    admin:
+      properties:
+        bootstrap-servers: localhost:9092
