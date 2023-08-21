@@ -4,7 +4,6 @@ import com.lucasilva.auctionproducer.avro.Proposal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -19,7 +18,7 @@ public class ProposalService {
         this.restTemplate = restTemplate;
     }
 
-    public List<Proposal> getProposalInfo() throws URISyntaxException {
+    public List<Proposal> getProposalInfo() {
         var response = restTemplate.getForEntity("http://localhost:3000", Proposal[].class);
         if(response.getStatusCode().is2xxSuccessful() && nonNull(response.getBody())) {
             return List.of(response.getBody());

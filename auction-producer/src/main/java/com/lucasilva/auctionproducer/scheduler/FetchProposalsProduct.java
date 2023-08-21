@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 @Component
@@ -28,7 +27,7 @@ class FetchProposalsProduct {
     }
 
     @Scheduled(fixedDelay = timeDelay)
-    List<Proposal> fetchProposalData() throws URISyntaxException {
+    List<Proposal> fetchProposalData() {
         log.info("[SCHEDULED] Fetching Proposal Data......");
 
         List<Proposal> proposals = proposalService.getProposalInfo();

@@ -3,7 +3,6 @@ package com.lucasilva.auctionproducer.producer;
 import com.lucasilva.auctionproducer.avro.Proposal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +13,11 @@ public class ProposalEventProducer {
 
     private static final Logger log = LoggerFactory.getLogger(ProposalEventProducer.class);
 
-    @Autowired
-    private KafkaTemplate<String, Proposal> kafkaTemplate;
+    private final KafkaTemplate<String, Proposal> kafkaTemplate;
+
+    public ProposalEventProducer(KafkaTemplate<String, Proposal> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     public void sendProposalEvents(Proposal proposal) {
         var productCode = proposal.getProduct().getCode();
