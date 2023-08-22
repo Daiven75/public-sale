@@ -26,24 +26,32 @@ public class ProposalEventService {
     public void process(Proposal proposalEvent) {
         log.info("[PROPOSAL-EVENT] [PROCESSING] {}", proposalEvent);
 
-        var product = productRepository.findByCode(proposalEvent.getProduct().getCode()).orElseThrow();
+        var product = productRepository.findByCode(proposalEvent.getProduct().getCode());
 
-        if(bidValueIsLessThanLimitSale(product.getLowerSaleValueLimit(), proposalEvent.getBidValue())) {
-            log.info("[PROPOSAL-EVENT] [REFUSED] proposal value {} is less than the minimum acceptable value {}",
-                    product.getLowerSaleValueLimit(), proposalEvent.getBidValue());
+        if(product.isEmpty()) {
+            log.warn("[PROPOSAL-EVENT] [NOT-FOUND] product with {} code is not part of our catalog",
+                    proposalEvent.getProduct().getCode());
+            return;
+        }
+
+        var foundProduct = product.get();
+
+        if(bidValueIsLessThanLimitSale(foundProduct.getLowerSaleValueLimit(), proposalEvent.getBidValue())) {
+            log.warn("[PROPOSAL-EVENT] [REFUSED] proposal value {} is less than the minimum acceptable value {}",
+                    foundProduct.getLowerSaleValueLimit(), proposalEvent.getBidValue());
             return;
         }
 
         var proposal = com.lucasilva.auction_consumer.model.Proposal.toProposal(proposalEvent);
-        proposal.linkToProduct(product);
+        proposal.linkToProduct(foundProduct);
         proposalRepository.save(proposal);
 
-        product.addProposal(proposal);
-        product.updateSalePrice();
-        productRepository.save(product);
+        foundProduct.addProposal(proposal);
+        foundProduct.updateSalePrice();
+        productRepository.save(foundProduct);
 
         log.info("[PROPOSAL-EVENT] [PROCESSED] product {} update with proposal value {} added",
-                product.getName(), proposal.getValue());
+                foundProduct.getName(), proposal.getValue());
     }
 
     private boolean bidValueIsLessThanLimitSale(BigDecimal limitLowerSaleValue, BigDecimal proposalValue) {
