@@ -1,6 +1,6 @@
 package com.lucasilva.auctionproducer.service;
 
-import com.lucasilva.auctionproducer.avro.Proposal;
+import avro.kafka.model.Proposal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

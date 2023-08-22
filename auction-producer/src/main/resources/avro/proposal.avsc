@@ -1,12 +1,14 @@
 {
   "type": "record",
   "name": "Proposal",
+  "namespace": "avro.kafka.model",
   "fields": [
     {
       "name": "product",
       "type": {
         "type": "record",
         "name": "Product",
+        "namespace": "avro.kafka.model",
         "fields": [
           {
             "name": "code",
@@ -33,6 +35,7 @@
       "type": {
         "type": "record",
         "name": "Author",
+        "namespace": "avro.kafka.model",
         "fields": [
           {
             "name": "name",

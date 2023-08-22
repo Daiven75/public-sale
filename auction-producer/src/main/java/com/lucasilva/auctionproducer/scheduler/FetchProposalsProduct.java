@@ -1,6 +1,6 @@
 package com.lucasilva.auctionproducer.scheduler;
 
-import com.lucasilva.auctionproducer.avro.Proposal;
+import avro.kafka.model.Proposal;
 import com.lucasilva.auctionproducer.producer.ProposalEventProducer;
 import com.lucasilva.auctionproducer.service.ProposalService;
 import org.slf4j.Logger;

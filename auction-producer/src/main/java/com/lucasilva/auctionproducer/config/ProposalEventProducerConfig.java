@@ -1,6 +1,6 @@
 package com.lucasilva.auctionproducer.config;
 
-import com.lucasilva.auctionproducer.avro.Proposal;
+import avro.kafka.model.Proposal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;

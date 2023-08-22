@@ -1,6 +1,6 @@
 package com.lucasilva.auctionproducer.producer;
 
-import com.lucasilva.auctionproducer.avro.Proposal;
+import avro.kafka.model.Proposal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;

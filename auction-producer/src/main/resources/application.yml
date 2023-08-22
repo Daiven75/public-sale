@@ -10,7 +10,6 @@ spring:
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
         "[schema.registry.url]": http://127.0.0.1:8085
-        "[specific.avro.reader]": true
         acks: all
         retries: 10
     admin:
