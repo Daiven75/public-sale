@@ -1,0 +1,52 @@
+{
+  "type": "record",
+  "name": "Proposal",
+  "namespace": "avro.kafka.model",
+  "fields": [
+    {
+      "name": "product",
+      "type": {
+        "type": "record",
+        "name": "Product",
+        "namespace": "avro.kafka.model",
+        "fields": [
+          {
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bidValue",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 9,
+        "scale": 2
+      }
+    },
+    {
+      "name": "author",
+      "type": {
+        "type": "record",
+        "name": "Author",
+        "namespace": "avro.kafka.model",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}
