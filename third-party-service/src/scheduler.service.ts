@@ -1,7 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Proposal } from './model/proposal';
-import { Product } from './model/product';
-import { Author } from './model/autor';
 
 @Injectable()
 export class SchedulerService {
@@ -11,7 +9,6 @@ export class SchedulerService {
   generateData(): Proposal[] {
     const amountOfProposals: number = this.amount();
     let proposals: Proposal[] = [];
-    const p: Proposal = new Proposal();
     for(let i = 0; i < amountOfProposals; i++) {
       proposals.push(new Proposal());
     }
@@ -19,8 +16,8 @@ export class SchedulerService {
   }
 
   private amount(): number {
-    const max: number = 6;
-    const min: number = 2;
+    const max: number = 2000;
+    const min: number = 50;
     return Math.random() * (max - min) + min;
   }
 }

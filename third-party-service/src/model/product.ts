@@ -18,7 +18,7 @@ export class Product {
 
   private generateCode(): string {
     const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const rangeCode: number = 10;
+    const rangeCode: number = 4;
     let result: string = '';
 
     for (let i = 0; i <= rangeCode; i++) {

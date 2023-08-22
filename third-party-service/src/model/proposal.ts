@@ -26,8 +26,8 @@ export class Proposal {
     }
 
     private generateBidValue(): number {
-        const highValue: number = 15000;
-        const lowValue: number = 150;
+        const highValue: number = 25000;
+        const lowValue: number = 15;
         const value: number = lowValue + Math.random() * (highValue - lowValue);
         return Number(value.toFixed(2));
     }

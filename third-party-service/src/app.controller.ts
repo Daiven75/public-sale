@@ -9,8 +9,7 @@ export class AppController {
 
     @Get()
     findAllData(): Proposal[] {
-        const hasData: boolean = Math.random() >= 0.3;
-        console.log("producer consultou: gerou data? " + hasData);
+        const hasData: boolean = Math.random() >= 0.5;
         return hasData ? this.schedulerService.generateData() : [];
     }
 }
