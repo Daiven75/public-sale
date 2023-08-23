@@ -12,4 +12,5 @@ export class AppController {
         const hasData: boolean = Math.random() >= 0.5;
         return hasData ? this.schedulerService.generateData() : [];
     }
+
 }

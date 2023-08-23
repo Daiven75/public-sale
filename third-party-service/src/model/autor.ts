@@ -18,7 +18,7 @@ export class Author {
 
     private generateName(): string {
         const name = 'Author Name ';
-        const rangeNameId: number = 50;
+        const rangeNameId: number = 5000;
         const randomId: number = Math.floor(Math.random() * rangeNameId);
         return name + randomId;
     }

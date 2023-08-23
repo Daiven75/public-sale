@@ -17,21 +17,27 @@ export class Product {
   }
 
   private generateCode(): string {
-    const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const rangeCode: number = 4;
-    let result: string = '';
+    const minCode: number = 1000;
+    const maxCode: number = 9999;
+    let codeId: string = 'PC-';
 
-    for (let i = 0; i <= rangeCode; i++) {
-      result += characters.charAt(Math.floor(Math.random() * rangeCode));
-    }
+    const numberCode: number = Math.floor(Math.random() * (maxCode - minCode + 1) + minCode);
 
-    return result;
+    return codeId + numberCode;
   }
 
   private generateName(): string {
     const name = 'Product Name ';
-    const rangeNameId: number = 50;
-    const randomId: number = Math.floor(Math.random() * rangeNameId);
-    return name + randomId;
+
+    const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const rangeName: number = 5;
+    let randomName: string = '';
+
+    for (let i = 0; i <= rangeName; i++) {
+      randomName += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    return name + randomName;
   }
+  
 }

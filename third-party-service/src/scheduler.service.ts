@@ -20,4 +20,5 @@ export class SchedulerService {
     const min: number = 50;
     return Math.random() * (max - min) + min;
   }
+  
 }
