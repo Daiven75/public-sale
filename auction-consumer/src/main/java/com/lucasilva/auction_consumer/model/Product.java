@@ -12,7 +12,8 @@ import static java.util.Objects.requireNonNull;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
+    @SequenceGenerator(name = "seqGen", sequenceName = "products_id_seq", allocationSize = 1)
     private Long id;
 
     private String code;
@@ -25,7 +26,7 @@ public class Product {
     @Column(name = "lower_sale_value_limit")
     private BigDecimal lowerSaleValueLimit;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Proposal> proposals;
 
     public Product() {}
@@ -75,7 +76,7 @@ public class Product {
         this.salePrice = proposals.stream()
                 .map(Proposal::getValue)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(new BigDecimal(proposals.size()), RoundingMode.UNNECESSARY);
+                .divide(new BigDecimal(proposals.size()), RoundingMode.HALF_DOWN);
     }
 
 }

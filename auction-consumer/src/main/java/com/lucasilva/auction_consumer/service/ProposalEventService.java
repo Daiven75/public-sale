@@ -6,6 +6,7 @@ import com.lucasilva.auction_consumer.repository.ProposalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -23,6 +24,7 @@ public class ProposalEventService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     public void process(Proposal proposalEvent) {
         log.info("[PROPOSAL-EVENT] [PROCESSING] {}", proposalEvent);
 
@@ -38,7 +40,7 @@ public class ProposalEventService {
 
         if(bidValueIsLessThanLimitSale(foundProduct.getLowerSaleValueLimit(), proposalEvent.getBidValue())) {
             log.warn("[PROPOSAL-EVENT] [REFUSED] proposal value {} is less than the minimum acceptable value {}",
-                    foundProduct.getLowerSaleValueLimit(), proposalEvent.getBidValue());
+                    proposalEvent.getBidValue(), foundProduct.getLowerSaleValueLimit());
             return;
         }
 

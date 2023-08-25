@@ -23,7 +23,7 @@ public class Product {
     @Column(name = "lower_sale_value_limit")
     private BigDecimal lowerSaleValueLimit;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Proposal> proposals;
 
     public Long getId() {
