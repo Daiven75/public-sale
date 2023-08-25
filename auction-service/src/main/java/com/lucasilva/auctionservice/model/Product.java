@@ -9,7 +9,8 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
+    @SequenceGenerator(name = "seqGen", sequenceName = "products_id_seq", allocationSize = 1)
     private Long id;
 
     private String code;
