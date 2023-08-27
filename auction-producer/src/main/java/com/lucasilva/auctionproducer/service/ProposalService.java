@@ -1,6 +1,7 @@
 package com.lucasilva.auctionproducer.service;
 
 import avro.kafka.model.Proposal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,6 +13,9 @@ import static java.util.Objects.nonNull;
 @Service
 public class ProposalService {
 
+    @Value("${third-party-service.url}")
+    private String url;
+
     private final RestTemplate restTemplate;
 
     public ProposalService(RestTemplate restTemplate) {
@@ -19,7 +23,7 @@ public class ProposalService {
     }
 
     public List<Proposal> getProposalInfo() {
-        var response = restTemplate.getForEntity("http://localhost:3000", Proposal[].class);
+        var response = restTemplate.getForEntity(url, Proposal[].class);
         if(response.getStatusCode().is2xxSuccessful() && nonNull(response.getBody())) {
             return List.of(response.getBody());
         }

@@ -9,9 +9,13 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
-        "[schema.registry.url]": http://127.0.0.1:8085
+        schema:
+          registry:
+            url: http://127.0.0.1:8085
         acks: all
         retries: 10
     admin:
       properties:
         bootstrap-servers: localhost:9092
+third-party-service:
+  url: http://localhost:3000

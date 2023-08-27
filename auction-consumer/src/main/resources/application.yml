@@ -23,5 +23,7 @@ spring:
       group-id: group_proposal
       auto-offset-reset: earliest
       properties:
-        schema.registry.url: http://127.0.0.1:8085
+        schema:
+          registry:
+            url: http://127.0.0.1:8085
         specific.avro.reader: true
