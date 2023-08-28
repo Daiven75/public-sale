@@ -1,0 +1,120 @@
+version: '3.8'
+services:
+  # SERVICES
+  auction-service:
+    image: daiven75/auction-service:1.0.0
+    ports:
+    - 8080:8080
+    networks:
+      - auction
+    depends_on:
+      - postgres
+    environment:
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.JPA.HIBERNATE.DDL-AUTO: update
+      SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/auction
+  auction-producer:
+    image: daiven75/auction-producer:1.0.0
+    ports:
+    - 8000:8000
+    networks:
+      - auction
+    depends_on:
+      - third-party-service
+      - kafka
+      - schema-registry
+    environment:
+      THIRD-PARTY-SERVICE.URL: http://third-party-service:3000
+      SPRING.KAFKA.PRODUCER.BOOTSTRAP-SERVERS: kafka:29092
+      SPRING.KAFKA.PRODUCER.PROPERTIES.SCHEMA.REGISTRY.URL: http://schema-registry:8085
+      SPRING.KAFKA.ADMIN.PROPERTIES.BOOTSTRAP-SERVERS: kafka:29092
+  auction-consumer:
+    image: daiven75/auction-consumer:1.0.0
+    ports:
+    - 8100:8100
+    networks:
+      - auction
+    depends_on:
+      - postgres
+      - auction-producer
+    environment:
+      SPRING.DATASOURCE.USERNAME: postgres
+      SPRING.DATASOURCE.PASSWORD: root
+      SPRING.JPA.HIBERNATE.DDL-AUTO: none
+      SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/auction
+      SPRING.KAFKA.CONSUMER.BOOTSTRAP-SERVERS: kafka:29092
+      SPRING.KAFKA.CONSUMER.PROPERTIES.SCHEMA.REGISTRY.URL: http://schema-registry:8085
+      SPRING.KAFKA.ADMIN.PROPERTIES.BOOTSTRAP-SERVERS: kafka:29092
+  third-party-service:
+    image: daiven75/third-party-service
+    ports:
+    - 3000:3000
+    networks:
+      - auction
+  # DB
+  postgres:
+    image: postgres:15.4
+    ports:
+      - 5432:5432
+    networks:
+      - auction
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: auction
+  # TOOLS
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    restart: always
+    ports:
+      - 2181:2181
+    networks:
+      - auction
+  kafka:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    networks:
+      - auction
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  schema-registry:
+    image: confluentinc/cp-schema-registry:6.2.0
+    restart: always
+    ports:
+      - 8085:8085
+    networks:
+      - auction
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_HOST_NAME: localhost
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8085
+  # UI
+  kafka-ui:
+    image: provectuslabs/kafka-ui:master
+    ports:
+      - "8088:8080"
+    networks:
+      - auction
+    restart: always
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8085
+networks:
+  auction:
+    driver: bridge
