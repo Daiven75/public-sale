@@ -1,2 +1,2 @@
 # public-sale
-[WIP] Track product auction prices :)
+Track product auction prices :)
