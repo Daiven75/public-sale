@@ -72,7 +72,7 @@ $ docker-compose up -d
 #### OBS: You can check the batch insertion of products for query mock up, through this [file](https://github.com/Daiven75/public-sale/blob/master/auction-service/src/main/resources/data.sql)
 ---
 
-## 💪 Como contribuir no projeto
+## 💪 How to contribute to the project
 
 1. Make a **fork** the project.
 2. Create a new branch with your changes: `git checkout -b my-feature`
