@@ -78,7 +78,7 @@ $ docker-compose up -d
 2. Create a new branch with your changes: `git checkout -b my-feature`
 3. Save the changes and create a commit message telling what you did: `git commit -m "feature: My new feature"`
 4. Submit your changes: `git push origin my-feature`
-> If you have any questions, check this [guia de como contribuir no GitHub](./CONTRIBUTING.md)
+> If you have any questions, check this [GitHub Contributing Guide](./CONTRIBUTING.md)
 
 ---
 
@@ -97,7 +97,7 @@ $ docker-compose up -d
 
 This project is licensed [MIT](./LICENSE).
 
-Made by Lucas Silva 👋🏽 [Entre em contato!](https://www.linkedin.com/in/lucas-silva-959102169)
+Made by Lucas Silva 👋🏽 [Contact](https://www.linkedin.com/in/lucas-silva-959102169)
 
 [Spring]: https://img.shields.io/badge/spring-008000?style=for-the-badge&logo=spring&logoColor=white
 [Spring-url]: https://spring.io/
