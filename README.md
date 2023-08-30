@@ -53,9 +53,6 @@ $ docker-compose up -d
 # The server will start on port:8080 - access http:localhost:8080
 
 ```
-<p align="center">
-  <a href="https://github.com/tgmarinho/README-ecoleta/blob/master/Insomnia_API_Ecoletajson.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
-</p>
 
 ---
 
