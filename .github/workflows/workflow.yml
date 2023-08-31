@@ -21,9 +21,6 @@ jobs:
         cache: 'maven'
 
     - name: Build Services with Maven
-      run: mvn clean install -DskipTests
-
-    - name: Build Services with Maven
       run: |
         cd ./auction-consumer
         mvn clean install -DskipTests
