@@ -3,12 +3,14 @@ services:
   # SERVICES
   auction-service:
     image: daiven75/auction-service:1.0.0
+    restart: on-failure
     ports:
     - 8080:8080
     networks:
       - auction
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       SPRING.DATASOURCE.USERNAME: postgres
       SPRING.DATASOURCE.PASSWORD: root
@@ -16,14 +18,18 @@ services:
       SPRING.DATASOURCE.URL: jdbc:postgresql://postgres:5432/auction
   auction-producer:
     image: daiven75/auction-producer:1.0.0
+    restart: on-failure
     ports:
     - 8000:8000
     networks:
       - auction
     depends_on:
-      - third-party-service
-      - kafka
-      - schema-registry
+      schema-registry: 
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      third-party-service:
+        condition: service_started
     environment:
       THIRD-PARTY-SERVICE.URL: http://third-party-service:3000
       SPRING.KAFKA.PRODUCER.BOOTSTRAP-SERVERS: kafka:29092
@@ -31,13 +37,16 @@ services:
       SPRING.KAFKA.ADMIN.PROPERTIES.BOOTSTRAP-SERVERS: kafka:29092
   auction-consumer:
     image: daiven75/auction-consumer:1.0.0
+    restart: on-failure
     ports:
     - 8100:8100
     networks:
       - auction
     depends_on:
-      - postgres
-      - auction-producer
+      postgres:
+        condition: service_healthy
+      auction-producer:
+        condition: service_started
     environment:
       SPRING.DATASOURCE.USERNAME: postgres
       SPRING.DATASOURCE.PASSWORD: root
@@ -59,6 +68,11 @@ services:
       - 5432:5432
     networks:
       - auction
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "auction", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: auction
@@ -90,7 +104,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
   schema-registry:
     image: confluentinc/cp-schema-registry:6.2.0
-    restart: always
     ports:
       - 8085:8085
     networks:
@@ -98,6 +111,11 @@ services:
     depends_on:
       - zookeeper
       - kafka
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/subjects"]
+      interval: 7s
+      timeout: 5s
+      retries: 3
     environment:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
       SCHEMA_REGISTRY_HOST_NAME: localhost
