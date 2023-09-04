@@ -8,11 +8,11 @@
   </p>
 </p>
 <p align="center">
-  <a href="#about-the-project">About The Project</a> •
+  <a href="#-about-the-project">About The Project</a> •
   <a href="#developing">Developing</a> •
-  <a href="#features">Features</a> •
-  <a href="#author">Author</a> •
-  <a href="#license">License</a>
+  <a href="#%EF%B8%8F-features">Features</a> •
+  <a href="#-author">Author</a> •
+  <a href="#-license">License</a>
 </p>
 
 ![public-sale-diagram](https://github.com/Daiven75/public-sale/assets/44280182/5d2577ff-2865-410b-ab02-45f63502e6d2)                                                                                                
